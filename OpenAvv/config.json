@@ -1,0 +1,5 @@
+﻿{
+  "ConnectionStrings": {
+    "OpenAvvConnectionString": "server=(localdb)\\MSSQLLocalDB; Database=OpenAvvDB; Integrated Security=True; MultipleActiveResultSets=true;"
+  }
+}

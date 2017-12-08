@@ -1,0 +1,106 @@
+﻿@model IEnumerable<StoryVM>
+@using Microsoft.AspNetCore.Identity;
+
+@inject SignInManager<OpenAvvUser> SignInManager
+@inject UserManager<OpenAvvUser> UserManager
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>
+    Stories &nbsp;
+    <a asp-action="Create" class="btn btn-default btn-xs">Create New</a>
+</h2>
+@if (ViewData["AllowAuthorError"] != null)
+{
+<div class="alert alert-warning alert-dismissable fade in">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong>Oops!</strong> @ViewData["AllowAuthorError"]
+</div>
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Info)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateCreated)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateModified)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AuthorName)
+            </th>
+            
+            @if (User.Identity.IsAuthenticated)
+            {
+                <th>Actions</th>
+            }
+                
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                <a asp-controller="Stories" asp-action="Details" asp-route-id="@item.ID">@Html.DisplayFor(modelItem => item.Title)</a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Info)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateCreated)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateModified)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AuthorName)
+            </td>
+            <td>
+                @if (UserManager.GetUserId(User) == item.AuthorId)
+                {
+                    <a asp-controller="Stories" asp-action="Edit" asp-route-id="@item.ID" class="btn btn-primary btn-xs"><i class="fa fa-pencil" aria-hidden="true"></i></a> 
+                    @*<a asp-controller="Stories" asp-action="Details" asp-route-id="@item.ID" class="btn btn-default btn-xs" >Details</a>*@
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#@item.ID"><i class="fa fa-times" aria-hidden="true"></i></button>
+                }
+
+
+                <!-- .modal -->
+                <div class="modal fade" id="@item.ID" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title">Delete</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p>Are you sure you want to delete theStory: @item.Title ?</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                <a asp-controller="Stories" asp-action="Delete" asp-route-id="@item.ID" class="btn btn-danger">Confirm Delete</a>
+                            </div>
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal-dialog -->
+                </div><!-- /.modal -->
+
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
