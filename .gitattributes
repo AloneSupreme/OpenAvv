@@ -1,1 +1,5 @@
+*.css linguist-language=cs
+*.css linguist-language=C#
+*.CSS linguist-language=C#
+*.CSS linguist-language=cs
 *.js linguist-language=cs
