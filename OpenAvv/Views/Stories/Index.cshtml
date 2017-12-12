@@ -32,20 +32,21 @@
                             <div class="col-md-4">
                                 <div class="card card-blog">
                                     <div class="card-image">
-                                        <a href="#pablo">
+                                        <a asp-controller="Stories" asp-action="Details" asp-route-id="@item.ID" class="text-primary">
                                             <img class="img rounded" src="/assets/img/card-blog2.jpg">
                                         </a>
                                     </div>
                                     <div class="card-body">
-                                        <h6 class="category text-primary">@Html.DisplayFor(modelItem => item.Title)</h6>
-                                        <h5 class="card-title">
+                                        <h6 class="category text-primary text-center">@Html.DisplayFor(modelItem => item.Title)</h6>
+                                        <h5 class="card-title text-center">
                                             @Html.DisplayFor(modelItem => item.Info)
                                         </h5>
-                                        <p class="card-description">
-                                            @*@Html.DisplayFor(modelItem => item.Description)*@
+                                        @*<p class="card-description">
+                                            @Html.DisplayFor(modelItem => item.Description)
                                             @item.Description.Substring(0,60)...<a asp-controller="Stories" asp-action="Details" asp-route-id="@item.ID" class="text-primary">Read More</a>
-                                        </p>
+                                        </p>*@
                                         <div class="card-footer">
+                                            <hr/>
                                             @if (UserManager.GetUserId(User) != item.AuthorId) {
                                                 <div class="author">
                                                     <img src="assets/img/julie.jpg" alt="..." class="avatar img-raised">
@@ -85,26 +86,6 @@
                                     </div><!-- /.modal-content -->
                                 </div><!-- /.modal-dialog -->
                             </div><!-- /.modal -->
-
-                            @*<div class="modal fade modal-mini modal-primary show" id="@item.ID" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" >
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header justify-content-center">
-                                            <div class="modal-profile">
-                                                <i class="now-ui-icons users_circle-08"></i>
-                                            </div>
-                                        </div>
-                                        <div class="modal-body">
-                                            <p>Are you sure you want to delete the Story: @item.Title ?</p>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-link btn-neutral" data-dismiss="modal">Cancel</button>
-                                            <a asp-controller="Stories" asp-action="Delete" asp-route-id="@item.ID" class="btn btn-danger">Confirm Delete</a>
-                                            
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>*@
                         }
 
                     </div>

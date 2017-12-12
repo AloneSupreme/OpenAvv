@@ -73,7 +73,7 @@ namespace OpenAvv.Controllers
             IEnumerable<StoryVM> IndexModel = _repository.GetAllStories();
             return View("Index",IndexModel);
         }
-
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Edit(Story updatedStory)

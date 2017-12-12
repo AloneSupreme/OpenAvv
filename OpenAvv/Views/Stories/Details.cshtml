@@ -56,7 +56,7 @@
                 }
                 <h3 class="title">@Html.DisplayFor(model => model.Title)</h3>
                 <p  @*id="editor"*@>
-                    @Html.DisplayFor(model => model.Description)
+                    @Html.Raw(@Model.Description)
                 </p>
             </div>
         </div>
