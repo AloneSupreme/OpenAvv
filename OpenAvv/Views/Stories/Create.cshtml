@@ -2,49 +2,72 @@
 
 @{
     ViewData["Title"] = "Create";
+    ViewData["PageType"] = "blog-post";
+    ViewData["NavClass"] = "navbar navbar-expand-lg navbar-absolute navbar-transparent";
 }
-
-<h2>Create</h2>
-
-<h4>StoryVM</h4>
-<hr />
-@if (Convert.ToString(ViewData["Message"]) == "Success")
-{
-    <div class="alert alert-success alert-dismissable">
-        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-        <strong>Success!</strong> Story is submitted.
+<script src="https://cdn.ckeditor.com/ckeditor5/1.0.0-alpha.2/classic/ckeditor.js"></script>
+<div class="page-header page-header-small">
+    <div class="page-header-image" data-parallax="true" style="background-image: url('/assets/img/bg24.jpg');">
     </div>
-}
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Title" class="control-label"></label>
-                <input asp-for="Title" class="form-control" />
-                <span asp-validation-for="Title" class="text-danger"></span>
+    <div class="content-center">
+        <div class="row">
+            <div class="col-md-8 ml-auto mr-auto text-center">
+                <h2 class="title">Create</h2>
+                <h4>Story</h4>
             </div>
-            <div class="form-group">
-                <label asp-for="Info" class="control-label"></label>
-                <input asp-for="Info" class="form-control" />
-                <span asp-validation-for="Info" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <textarea asp-for="Description" class="form-control" ></textarea>
-                <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </form>
+        </div>
     </div>
 </div>
 
-<div>
+
+<div class="section">
+    @if (Convert.ToString(ViewData["Message"]) == "Success")
+    {
+        <div class="alert alert-success alert-dismissable">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Success!</strong> Story is submitted.
+        </div>
+    }
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <form asp-action="Create">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="Title" class="control-label"></label>
+                        <input asp-for="Title" class="form-control" />
+                        <span asp-validation-for="Title" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Info" class="control-label"></label>
+                        <input asp-for="Info" class="form-control" />
+                        <span asp-validation-for="Info" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Description" class="control-label"></label>
+                        <div id="editor">
+                        <textarea asp-for="Description" class="form-control" rows="10"></textarea>
+                    </div>
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Create" class="btn btn-default" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@*<div>
     <a asp-action="Index">Back to List</a>
-</div>
-
+</div>*@
+<script>
+    ClassicEditor
+        .create(document.querySelector('#editor'))
+        .catch(error => {
+            console.error(error);
+        });
+</script>
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

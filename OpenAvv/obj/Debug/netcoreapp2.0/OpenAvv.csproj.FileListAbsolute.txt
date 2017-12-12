@@ -1,22 +1,12 @@
-C:/Users/KabbiReddy/Documents/Visual Studio 2017/Projects/OpenAvv/OpenAvv/bin/Debug/netcoreapp2.0/OpenAvv.deps.json
-C:/Users/KabbiReddy/Documents/Visual Studio 2017/Projects/OpenAvv/OpenAvv/bin/Debug/netcoreapp2.0/OpenAvv.runtimeconfig.json
-C:/Users/KabbiReddy/Documents/Visual Studio 2017/Projects/OpenAvv/OpenAvv/bin/Debug/netcoreapp2.0/OpenAvv.runtimeconfig.dev.json
-C:/Users/KabbiReddy/Documents/Visual Studio 2017/Projects/OpenAvv/OpenAvv/bin/Debug/netcoreapp2.0/OpenAvv.dll
-C:/Users/KabbiReddy/Documents/Visual Studio 2017/Projects/OpenAvv/OpenAvv/bin/Debug/netcoreapp2.0/OpenAvv.pdb
-C:/Users/KabbiReddy/Documents/Visual Studio 2017/Projects/OpenAvv/OpenAvv/obj/Debug/netcoreapp2.0/OpenAvv.csproj.CoreCompileInputs.cache
-C:/Users/KabbiReddy/Documents/Visual Studio 2017/Projects/OpenAvv/OpenAvv/obj/Debug/netcoreapp2.0/OpenAvv.AssemblyInfoInputs.cache
-C:/Users/KabbiReddy/Documents/Visual Studio 2017/Projects/OpenAvv/OpenAvv/obj/Debug/netcoreapp2.0/OpenAvv.AssemblyInfo.cs
-C:/Users/KabbiReddy/Documents/Visual Studio 2017/Projects/OpenAvv/OpenAvv/obj/Debug/netcoreapp2.0/OpenAvv.dll
-C:/Users/KabbiReddy/Documents/Visual Studio 2017/Projects/OpenAvv/OpenAvv/obj/Debug/netcoreapp2.0/OpenAvv.pdb
-C:/Users/KabbiReddy/Documents/Visual Studio 2017/Projects/OpenAvv/OpenAvv/obj/Debug/netcoreapp2.0/OpenAvv.csprojResolveAssemblyReference.cache
-/Users/SuPrEm3/Documents/Projects/OpenAvv/OpenAvv/obj/Debug/netcoreapp2.0/OpenAvv.dll
-/Users/SuPrEm3/Documents/Projects/OpenAvv/OpenAvv/obj/Debug/netcoreapp2.0/OpenAvv.pdb
-/Users/SuPrEm3/Documents/Projects/OpenAvv/OpenAvv/bin/Debug/netcoreapp2.0/OpenAvv.deps.json
-/Users/SuPrEm3/Documents/Projects/OpenAvv/OpenAvv/bin/Debug/netcoreapp2.0/OpenAvv.runtimeconfig.json
-/Users/SuPrEm3/Documents/Projects/OpenAvv/OpenAvv/bin/Debug/netcoreapp2.0/OpenAvv.runtimeconfig.dev.json
-/Users/SuPrEm3/Documents/Projects/OpenAvv/OpenAvv/bin/Debug/netcoreapp2.0/OpenAvv.dll
-/Users/SuPrEm3/Documents/Projects/OpenAvv/OpenAvv/bin/Debug/netcoreapp2.0/OpenAvv.pdb
-/Users/SuPrEm3/Documents/Projects/OpenAvv/OpenAvv/obj/Debug/netcoreapp2.0/OpenAvv.csprojResolveAssemblyReference.cache
-/Users/SuPrEm3/Documents/Projects/OpenAvv/OpenAvv/obj/Debug/netcoreapp2.0/OpenAvv.csproj.CoreCompileInputs.cache
-/Users/SuPrEm3/Documents/Projects/OpenAvv/OpenAvv/obj/Debug/netcoreapp2.0/OpenAvv.AssemblyInfoInputs.cache
-/Users/SuPrEm3/Documents/Projects/OpenAvv/OpenAvv/obj/Debug/netcoreapp2.0/OpenAvv.AssemblyInfo.cs
+C:\Users\KabbiReddy\Documents\Visual Studio 2017\Projects\OpenAvv\OpenAvv\bin\Debug\netcoreapp2.0\OpenAvv.deps.json
+C:\Users\KabbiReddy\Documents\Visual Studio 2017\Projects\OpenAvv\OpenAvv\bin\Debug\netcoreapp2.0\OpenAvv.runtimeconfig.json
+C:\Users\KabbiReddy\Documents\Visual Studio 2017\Projects\OpenAvv\OpenAvv\bin\Debug\netcoreapp2.0\OpenAvv.runtimeconfig.dev.json
+C:\Users\KabbiReddy\Documents\Visual Studio 2017\Projects\OpenAvv\OpenAvv\bin\Debug\netcoreapp2.0\OpenAvv.dll
+C:\Users\KabbiReddy\Documents\Visual Studio 2017\Projects\OpenAvv\OpenAvv\bin\Debug\netcoreapp2.0\OpenAvv.pdb
+C:\Users\KabbiReddy\Documents\Visual Studio 2017\Projects\OpenAvv\OpenAvv\obj\Debug\netcoreapp2.0\OpenAvv.csproj.CoreCompileInputs.cache
+C:\Users\KabbiReddy\Documents\Visual Studio 2017\Projects\OpenAvv\OpenAvv\obj\Debug\netcoreapp2.0\OpenAvv.AssemblyInfoInputs.cache
+C:\Users\KabbiReddy\Documents\Visual Studio 2017\Projects\OpenAvv\OpenAvv\obj\Debug\netcoreapp2.0\OpenAvv.AssemblyInfo.cs
+C:\Users\KabbiReddy\Documents\Visual Studio 2017\Projects\OpenAvv\OpenAvv\obj\Debug\netcoreapp2.0\OpenAvv.dll
+C:\Users\KabbiReddy\Documents\Visual Studio 2017\Projects\OpenAvv\OpenAvv\obj\Debug\netcoreapp2.0\OpenAvv.pdb
+C:\Users\KabbiReddy\Documents\Visual Studio 2017\Projects\OpenAvv\OpenAvv\obj\Debug\netcoreapp2.0\OpenAvv.csprojResolveAssemblyReference.cache
+C:\Users\KabbiReddy\Documents\Visual Studio 2017\Projects\OpenAvv\OpenAvv\obj\Debug\netcoreapp2.0\UserSecretsAssemblyInfo.cs

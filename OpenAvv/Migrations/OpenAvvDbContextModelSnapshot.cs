@@ -198,14 +198,14 @@ namespace OpenAvv.Migrations
 
                     b.Property<string>("AuthorID");
 
+                    b.Property<string>("Content")
+                        .IsRequired();
+
                     b.Property<DateTime>("DateCreated");
 
                     b.Property<DateTime?>("DateModified");
 
                     b.Property<string>("Description")
-                        .IsRequired();
-
-                    b.Property<string>("Info")
                         .IsRequired()
                         .HasMaxLength(100);
 

@@ -17,9 +17,18 @@ namespace OpenAvv
     public class Startup
     {
         private readonly IConfiguration _config;
-        public Startup(IConfiguration configuration)
+        public IConfigurationRoot Configuration { get; }
+        public Startup(IConfiguration configuration, IHostingEnvironment env)
         {
             _config = configuration;
+            var builder = new ConfigurationBuilder();
+
+            if (env.IsDevelopment())
+            {
+                builder.AddUserSecrets<Startup>();
+            }
+
+            Configuration = builder.Build();
         }
 
         
@@ -32,7 +41,21 @@ namespace OpenAvv
             services.AddIdentity<OpenAvvUser, OpenAvvRole>()
                 .AddEntityFrameworkStores<OpenAvvDbContext>()
                 .AddDefaultTokenProviders();
-            
+
+            //Facebook OAuth
+            services.AddAuthentication().AddFacebook(facebookOptions =>
+            {
+                facebookOptions.AppId = Configuration["Authentication:Facebook:AppId"];
+                facebookOptions.AppSecret = Configuration["Authentication:Facebook:AppSecret"];
+            });
+
+            //Google+ OAuth
+            services.AddAuthentication().AddGoogle(googleOptions =>
+            {
+                googleOptions.ClientId = Configuration["Authentication:Google:ClientId"];
+                googleOptions.ClientSecret = Configuration["Authentication:Google:ClientSecret"];
+            });
+
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
 
