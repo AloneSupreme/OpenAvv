@@ -9,4 +9,3 @@ C:\Users\KabbiReddy\Documents\Visual Studio 2017\Projects\OpenAvv\OpenAvv\obj\De
 C:\Users\KabbiReddy\Documents\Visual Studio 2017\Projects\OpenAvv\OpenAvv\obj\Debug\netcoreapp2.0\OpenAvv.dll
 C:\Users\KabbiReddy\Documents\Visual Studio 2017\Projects\OpenAvv\OpenAvv\obj\Debug\netcoreapp2.0\OpenAvv.pdb
 C:\Users\KabbiReddy\Documents\Visual Studio 2017\Projects\OpenAvv\OpenAvv\obj\Debug\netcoreapp2.0\OpenAvv.csprojResolveAssemblyReference.cache
-C:\Users\KabbiReddy\Documents\Visual Studio 2017\Projects\OpenAvv\OpenAvv\obj\Debug\netcoreapp2.0\UserSecretsAssemblyInfo.cs

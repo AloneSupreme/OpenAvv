@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETCoreApp,Version=v2.0",
-    "signature": "b163db277fd398ec359f71fbfea25c9231894bd7"
+    "signature": "3edb1d77d2952f1e0ec04beefe62582b73a0e610"
   },
   "compilationOptions": {
     "defines": [
@@ -29,7 +29,9 @@
           "Microsoft.AspNetCore.Authentication.Facebook": "2.0.1",
           "Microsoft.NETCore.App": "2.0.0",
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": "2.0.1",
-          "Sendgrid": "9.9.0"
+          "Sendgrid": "9.9.0",
+          "bootstrap": "4.0.0-beta",
+          "popper.js": "1.12.9"
         },
         "runtime": {
           "OpenAvv.dll": {}
@@ -38,7 +40,14 @@
           "OpenAvv.dll": {}
         }
       },
+      "bootstrap/4.0.0-beta": {
+        "dependencies": {
+          "jQuery": "1.9.1",
+          "popper.js": "1.12.9"
+        }
+      },
       "FontAwesome/4.7.0": {},
+      "jQuery/1.9.1": {},
       "Libuv/1.10.0": {
         "dependencies": {
           "Microsoft.NETCore.Platforms": "2.0.0"
@@ -2536,6 +2545,7 @@
           "lib/netstandard1.3/NuGet.Frameworks.dll": {}
         }
       },
+      "popper.js/1.12.9": {},
       "Remotion.Linq/2.1.1": {
         "dependencies": {
           "System.Collections": "4.3.0",
@@ -4304,12 +4314,26 @@
       "serviceable": false,
       "sha512": ""
     },
+    "bootstrap/4.0.0-beta": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-vXc4BAnpmiIqwn2x9+lxPXndpY12BhoFHLZ6SpD04ghIGEFHFKPjqJyRjbBsbIWlefIMCXE83UqeCSMOHoB2LA==",
+      "path": "bootstrap/4.0.0-beta",
+      "hashPath": "bootstrap.4.0.0-beta.nupkg.sha512"
+    },
     "FontAwesome/4.7.0": {
       "type": "package",
       "serviceable": true,
       "sha512": "sha512-n4H/brfszElyoZ4kmGh8E75uqvLzLvFr3h2PFVdPH1LwUmWIpeqdaW2pcC4oZAhg7sESyObh0IZpAI8COCNeUg==",
       "path": "fontawesome/4.7.0",
       "hashPath": "fontawesome.4.7.0.nupkg.sha512"
+    },
+    "jQuery/1.9.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-HiX9icLyiJGgiL5EOIn0d1MBPHVV2M9mzWT4mANdniDNR51RvAFTyKEXEd2+5yQJ4PJ5xePOR61Vjj/omQzYcw==",
+      "path": "jquery/1.9.1",
+      "hashPath": "jquery.1.9.1.nupkg.sha512"
     },
     "Libuv/1.10.0": {
       "type": "package",
@@ -5542,6 +5566,13 @@
       "sha512": "sha512-WCkN68c8q+USG+Ot1MmBDH+9DUo5dk7UB0QDMiwCYhrH7ZoFLKFGGNzJ8C3LTR1DvB1LW9BOxKeznnZznKiCTA==",
       "path": "nuget.frameworks/4.0.0",
       "hashPath": "nuget.frameworks.4.0.0.nupkg.sha512"
+    },
+    "popper.js/1.12.9": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-WfoI8YXFx31zr8w6AvYMmqKihR3a/wLc5wBhu41ApgBukTM8C2UHNSRFrO6485SDQ/HKoSn9yiEMgfBx1LVNNw==",
+      "path": "popper.js/1.12.9",
+      "hashPath": "popper.js.1.12.9.nupkg.sha512"
     },
     "Remotion.Linq/2.1.1": {
       "type": "package",
