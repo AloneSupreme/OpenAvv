@@ -13,6 +13,13 @@ using Microsoft.Extensions.Options;
 using OpenAvv.Data.Models;
 using OpenAvv.ViewModels.ManageViewModels;
 using OpenAvv.Services;
+using OpenAvv.Data.Models.ImageSystem;
+using System.IO;
+using Microsoft.AspNetCore.Hosting;
+using System.Net.Http.Headers;
+using Microsoft.AspNetCore.Http;
+using OpenAvv.Data;
+using ImageMagick;
 
 namespace OpenAvv.Controllers
 {
@@ -25,6 +32,8 @@ namespace OpenAvv.Controllers
         private readonly IEmailSender _emailSender;
         private readonly ILogger _logger;
         private readonly UrlEncoder _urlEncoder;
+        private IHostingEnvironment _environment;
+        private readonly IOpenAvvRepository _repository;
 
         private const string AuthenicatorUriFormat = "otpauth://totp/{0}:{1}?secret={2}&issuer={0}&digits=6";
 
@@ -33,13 +42,17 @@ namespace OpenAvv.Controllers
           SignInManager<OpenAvvUser> signInManager,
           IEmailSender emailSender,
           ILogger<ManageController> logger,
-          UrlEncoder urlEncoder)
+          UrlEncoder urlEncoder,
+          IHostingEnvironment environment,
+          IOpenAvvRepository repository)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
             _logger = logger;
             _urlEncoder = urlEncoder;
+            _environment = environment;
+            _repository = repository;
         }
 
         [TempData]
@@ -53,14 +66,29 @@ namespace OpenAvv.Controllers
             {
                 throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
-
+            var path = "";
+            try
+            {
+                path = _repository.GetAvatarPath(_userManager.GetUserId(User));
+            }
+            catch (NullReferenceException E)
+            {
+                path = "/assets/img/default-avatar.png";
+            }
+            //    if (path == null || path.Equals(""))
+            //{
+            //    path = "/assets/img/default-avatar.jpg";
+            //}
             var model = new IndexViewModel
             {
                 Username = user.UserName,
                 Email = user.Email,
                 PhoneNumber = user.PhoneNumber,
                 IsEmailConfirmed = user.EmailConfirmed,
-                StatusMessage = StatusMessage
+                StatusMessage = StatusMessage,
+                AvatarPath =  path,
+                UserFullName = user.FirstName + " " + user.LastName,
+                UserDescription = user.Description
             };
 
             return View(model);
@@ -462,6 +490,96 @@ namespace OpenAvv.Controllers
             _logger.LogInformation("User with ID {UserId} has generated new 2FA recovery codes.", user.Id);
 
             return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult UploadAvatar(IFormFile Avatar)
+        {
+            if (ModelState.IsValid)
+            {
+                if (Avatar != null && Avatar.Length > 0)
+                {
+                    var file = Avatar;
+                    var uploads = Path.Combine(_environment.WebRootPath, "Avatars");
+
+                    if (file.Length > 0)
+                    {
+                        var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
+                        string fileExt = Path.GetExtension(fileName)/*.Substring(1)*/;
+                        var supportedTypes = new[] { "jpg", "jpeg", "png" };
+                        if (!supportedTypes.Contains(fileExt.Substring(1)))
+                        {
+                            ModelState.AddModelError("photo", "Invalid type. Only the following types (jpg, jpeg, png) are supported.");
+                            return View("Index");
+                        }
+                        string newFileName = _userManager.GetUserName(User).Replace(".", "").Replace("@", "") + fileExt;
+                        //Console.WriteLine(fileName);
+                        using (var ms = new MemoryStream())
+                        {
+                            file.CopyTo(ms);
+                            var fileBytes = ms.ToArray();
+                            //string s = Convert.ToBase64String(fileBytes);
+
+                            using (MagickImage image = new MagickImage(fileBytes))
+                            {                                
+                                int x, y, s;
+                                if(image.Width > image.Height)
+                                {
+                                    s = image.Height;
+                                    y = 0;
+                                    x = (image.Width - image.Height)/2;
+                                }
+                                else if(image.Width < image.Height)
+                                {
+                                    s = image.Width;
+                                    x = 0;
+                                    y = (image.Height - image.Width) / 2;
+                                }
+                                else
+                                {
+                                    x = 0; y = 0;
+                                    s = image.Width;
+                                }
+                                MagickGeometry size = new MagickGeometry(x,y,s,s);
+                                // This will resize the image to a fixed size without maintaining the aspect ratio.
+                                // Normally an image will be resized to fit inside the specified size.
+                                size.IgnoreAspectRatio = false;
+                                image.Crop(size);
+                                image.Format = MagickFormat.Jpeg;
+
+                                // Save the result
+                                using (var fileStream = new FileStream(Path.Combine(uploads, newFileName/*file.FileName*/), FileMode.Create))
+                                {
+                                    image.Write(fileStream);
+                                }
+                                //image.Write(image,SampleFiles.OutputDirectory + "Snakeware.100x100.png",);
+                            }
+                        }
+                        
+                        Image avatarImage = new Image()
+                        {
+                            FileName = newFileName/*file.FileName*/,
+                            Path = Path.Combine( "\\Avatars", newFileName/*file.FileName*/),
+                            Category = "Avatar",
+                            AltText = _userManager.GetUserName(User),
+                            DateCreated = DateTime.Now
+                        };
+                        _repository.AddAvatar(avatarImage, _userManager.GetUserId(User));
+                        StatusMessage = "Your Avatar has been updated";
+                    }
+                }
+                
+                //_context.Add(employee);
+                //await _context.SaveChangesAsync();
+                //return RedirectToAction("Index");
+
+            }
+            else
+            {
+                var errors = ModelState.Values.SelectMany(v => v.Errors);
+            }
+            return RedirectToAction("Index");
         }
 
         #region Helpers

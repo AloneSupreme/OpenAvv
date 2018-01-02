@@ -1,0 +1,123 @@
+﻿@model IEnumerable<OpenAvv.ViewModels.CommentViewModel>
+
+<div class="section section-comments">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 ml-auto mr-auto">
+                <div class="media-area">
+                    <h3 class="title text-center">@Model.Comments.Count() Comments</h3>
+                    @foreach (CommentViewModel item in Model.Comments)
+                    {
+                        <div class="media">
+                            <a class="pull-left" href="#pablo">
+                                <div class="avatar">
+                                    <img class="media-object img-raised" src="/assets/img/james.jpg" alt="..." />
+                                </div>
+                            </a>
+                            <div class="media-body">
+                                <h5 class="media-heading">
+                                    @item.CommenterName&nbsp;
+                                    @if (Model.AuthorId.Equals(item.CommenterId))
+                                    {<small class="category text-info">Author</small>}
+                                    <small class="text-muted">&middot; @String.Format("{0:MMMM dd, yyyy}", item.DateCreated)</small>
+
+                                </h5>
+                                <p>@item.Body</p>
+                                <div class="media-footer">
+                                    <a id="loadReplyPartialView" class="btn btn-primary btn-neutral pull-right" rel="tooltip" title="Reply to Comment">
+                                        <i class="now-ui-icons ui-1_send"></i> Reply
+                                    </a>
+                                    <a id="dislikeincmt@(item.Id)" data-like-or-dislike="dislike" data-comment-id="@item.Id" data-story-id="@Model.Id" class="btn btn-danger btn-neutral pull-right dislike">
+                                        @if (item.LikeOrDislike.Equals("Dislike"))
+                                        {<i class="fa fa-thumbs-down fa-lg"></i>}
+                                        else
+                                        {<i class="fa fa-thumbs-o-down fa-lg"></i>}
+                                        &nbsp;@item.DislikeCount
+                                    </a>
+                                    <a id="likeincmt@(item.Id)" data-like-or-dislike="like" data-comment-id="@item.Id" data-story-id="@Model.Id" class="btn btn-danger btn-neutral pull-right like">
+                                        @if (item.LikeOrDislike.Equals("Like"))
+                                        {<i class="fa fa-thumbs-up fa-lg"></i>}
+                                        else
+                                        {<i class="fa fa-thumbs-o-up fa-lg"></i>}
+                                        &nbsp;@item.LikeCount
+                                    </a>
+                                </div>
+                                <div id="ReplyFormDiv" class="commentreplies">
+                                    @Html.Partial("Shared/_ReplyPartialView")
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    @*<div class="media">
+                            <a class="pull-left" href="#pablo">
+                                <div class="avatar">
+                                    <img class="media-object img-raised" alt="Tim Picture" src="/assets/img/michael.jpg">
+                                </div>
+                            </a>
+                            <div class="media-body">
+                                <h5 class="media-heading">
+                                    John Camber
+                                    <small class="text-muted">&middot; Yesterday</small>
+                                </h5>
+                                <p>Hello guys, nice to have you on the platform! There will be a lot of great stuff coming soon. We will keep you posted for the latest news.</p>
+                                <p> Don't forget, You're Awesome!</p>
+                                <div class="media-footer">
+                                    <a href="#pablo" class="btn btn-primary btn-neutral pull-right" rel="tooltip" title="Reply to Comment">
+                                        <i class="now-ui-icons ui-1_send"></i> Reply
+                                    </a>
+                                    <a href="#pablo" class="btn btn-danger btn-neutral pull-right">
+                                        <i class="now-ui-icons ui-2_favourite-28"></i> 25
+                                    </a>
+                                </div>
+                                <div class="media">
+                                    <a class="pull-left" href="#pablo">
+                                        <div class="avatar">
+                                            <img class="media-object img-raised" alt="64x64" src="/assets/img/julie.jpg">
+                                        </div>
+                                    </a>
+                                    <div class="media-body">
+                                        <h5 class="media-heading">
+                                            Tina Andrew
+                                            <small class="text-muted">· 2 Days Ago</small>
+                                        </h5>
+                                        <p>Hello guys, nice to have you on the platform! There will be a lot of great stuff coming soon. We will keep you posted for the latest news.</p>
+                                        <p> Don't forget, You're Awesome!</p>
+                                        <div class="media-footer">
+                                            <a href="#pablo" class="btn btn-primary btn-neutral pull-right" rel="tooltip" title="" data-original-title="Reply to Comment">
+                                                <i class="now-ui-icons ui-1_send"></i> Reply
+                                            </a>
+                                            <a href="#pablo" class="btn btn-danger btn-neutral pull-right">
+                                                <i class="now-ui-icons ui-2_favourite-28"></i> 2
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>*@
+                </div>
+                @if (SignInManager.IsSignedIn(User))
+                {
+                    <h3 class="title text-center">Post your comment</h3>
+                    <div class="media media-post">
+                        <a class="pull-left author" href="#pablo">
+                            <div class="avatar">
+                                <img class="media-object img-raised" alt="64x64" src="/assets/img/olivia.jpg">
+                            </div>
+                        </a>
+                        <div class="media-body">
+                            <form asp-action="NewComment">
+                                <textarea name="commentBody" class="form-control" placeholder="Write a nice reply or go home..." rows="4"></textarea>
+                                <input value="@Model.Id" name="postid" hidden />
+                                <div class="media-footer">
+                                    <button type="submit" class="btn btn-primary pull-right">
+                                        <i class="now-ui-icons ui-1_send"></i> Comment
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<sitemanifest>
+  <IisApp path="C:\Users\KabbiReddy\Documents\Visual Studio 2017\Projects\OpenAvv\OpenAvv\obj\Release\netcoreapp2.0\PubTmp\Out\" />
+  <dbfullsql path="C:\Users\KabbiReddy\Documents\Visual Studio 2017\Projects\OpenAvv\OpenAvv\obj\Release\netcoreapp2.0\PubTmp\EFSQLScripts\OpenAvv.Data.OpenAvvDbContext.sql" />
+</sitemanifest>

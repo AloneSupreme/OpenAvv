@@ -104,6 +104,154 @@ namespace OpenAvv.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("OpenAvv.Data.Models.CommentSystem.Comment", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Body")
+                        .IsRequired();
+
+                    b.Property<DateTime>("DateCreated");
+
+                    b.Property<bool>("Deleted");
+
+                    b.Property<int>("DislikeCount");
+
+                    b.Property<int>("LikeCount");
+
+                    b.Property<string>("StoryId");
+
+                    b.Property<string>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StoryId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Comment");
+                });
+
+            modelBuilder.Entity("OpenAvv.Data.Models.CommentSystem.Reply", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Body")
+                        .IsRequired();
+
+                    b.Property<string>("CommentId");
+
+                    b.Property<DateTime>("DateCreated");
+
+                    b.Property<bool>("Deleted");
+
+                    b.Property<int>("DislikeCount");
+
+                    b.Property<int>("LikeCount");
+
+                    b.Property<string>("StoryId");
+
+                    b.Property<string>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CommentId");
+
+                    b.HasIndex("StoryId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Reply");
+                });
+
+            modelBuilder.Entity("OpenAvv.Data.Models.ImageSystem.Image", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("AltText");
+
+                    b.Property<string>("Category");
+
+                    b.Property<DateTime>("DateCreated");
+
+                    b.Property<string>("FileName");
+
+                    b.Property<string>("Path");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Image");
+                });
+
+            modelBuilder.Entity("OpenAvv.Data.Models.LikeSystem.CommentLike", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("CommentId");
+
+                    b.Property<bool>("Dislike");
+
+                    b.Property<bool>("Like");
+
+                    b.Property<string>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CommentId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("CommentLikes");
+                });
+
+            modelBuilder.Entity("OpenAvv.Data.Models.LikeSystem.PostLike", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<bool>("Dislike");
+
+                    b.Property<bool>("Like");
+
+                    b.Property<string>("StoryId");
+
+                    b.Property<string>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StoryId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("PostLikes");
+                });
+
+            modelBuilder.Entity("OpenAvv.Data.Models.LikeSystem.ReplyLike", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<bool>("Dislike");
+
+                    b.Property<bool>("Like");
+
+                    b.Property<string>("ReplyId");
+
+                    b.Property<string>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ReplyId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("ReplyLikes");
+                });
+
             modelBuilder.Entity("OpenAvv.Data.Models.OpenAvvRole", b =>
                 {
                     b.Property<string>("Id")
@@ -134,6 +282,8 @@ namespace OpenAvv.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<int>("AccessFailedCount");
+
+                    b.Property<string>("AvatarId");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
@@ -180,6 +330,8 @@ namespace OpenAvv.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AvatarId");
+
                     b.HasIndex("NormalizedEmail")
                         .HasName("EmailIndex");
 
@@ -193,12 +345,12 @@ namespace OpenAvv.Migrations
 
             modelBuilder.Entity("OpenAvv.Data.Models.Story", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("AuthorID");
+                    b.Property<string>("AuthorId");
 
-                    b.Property<string>("Content")
+                    b.Property<string>("Body")
                         .IsRequired();
 
                     b.Property<DateTime>("DateCreated");
@@ -209,12 +361,16 @@ namespace OpenAvv.Migrations
                         .IsRequired()
                         .HasMaxLength(100);
 
+                    b.Property<int>("NetLikeCount");
+
+                    b.Property<bool>("Published");
+
                     b.Property<string>("Title")
                         .IsRequired();
 
-                    b.HasKey("ID");
+                    b.HasKey("Id");
 
-                    b.HasIndex("AuthorID");
+                    b.HasIndex("AuthorId");
 
                     b.ToTable("Story");
                 });
@@ -264,11 +420,77 @@ namespace OpenAvv.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("OpenAvv.Data.Models.CommentSystem.Comment", b =>
+                {
+                    b.HasOne("OpenAvv.Data.Models.Story", "Story")
+                        .WithMany("Comments")
+                        .HasForeignKey("StoryId");
+
+                    b.HasOne("OpenAvv.Data.Models.OpenAvvUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("OpenAvv.Data.Models.CommentSystem.Reply", b =>
+                {
+                    b.HasOne("OpenAvv.Data.Models.CommentSystem.Comment", "Comment")
+                        .WithMany("Replies")
+                        .HasForeignKey("CommentId");
+
+                    b.HasOne("OpenAvv.Data.Models.Story", "Story")
+                        .WithMany("Replies")
+                        .HasForeignKey("StoryId");
+
+                    b.HasOne("OpenAvv.Data.Models.OpenAvvUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("OpenAvv.Data.Models.LikeSystem.CommentLike", b =>
+                {
+                    b.HasOne("OpenAvv.Data.Models.CommentSystem.Comment", "Comment")
+                        .WithMany("CommentLikes")
+                        .HasForeignKey("CommentId");
+
+                    b.HasOne("OpenAvv.Data.Models.OpenAvvUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("OpenAvv.Data.Models.LikeSystem.PostLike", b =>
+                {
+                    b.HasOne("OpenAvv.Data.Models.Story", "Story")
+                        .WithMany("PostLikes")
+                        .HasForeignKey("StoryId");
+
+                    b.HasOne("OpenAvv.Data.Models.OpenAvvUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("OpenAvv.Data.Models.LikeSystem.ReplyLike", b =>
+                {
+                    b.HasOne("OpenAvv.Data.Models.CommentSystem.Reply", "Reply")
+                        .WithMany("ReplyLikes")
+                        .HasForeignKey("ReplyId");
+
+                    b.HasOne("OpenAvv.Data.Models.OpenAvvUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("OpenAvv.Data.Models.OpenAvvUser", b =>
+                {
+                    b.HasOne("OpenAvv.Data.Models.ImageSystem.Image", "Avatar")
+                        .WithMany()
+                        .HasForeignKey("AvatarId");
+                });
+
             modelBuilder.Entity("OpenAvv.Data.Models.Story", b =>
                 {
                     b.HasOne("OpenAvv.Data.Models.OpenAvvUser", "Author")
                         .WithMany("Stories")
-                        .HasForeignKey("AuthorID");
+                        .HasForeignKey("AuthorId");
                 });
 #pragma warning restore 612, 618
         }

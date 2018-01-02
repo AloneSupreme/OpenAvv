@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="IIS Web Application Name" description="" value="OpenAvvAbhi" tags="IisApp">
+    <parameterEntry kind="ProviderPath" scope="IisApp" match="^C:\\Users\\KabbiReddy\\Documents\\Visual\ Studio\ 2017\\Projects\\OpenAvv\\OpenAvv\\obj\\Release\\netcoreapp2\.0\\PubTmp\\Out\\$" />
+  </parameter>
+  <parameter name="OpenAvv.Data.OpenAvvDbContext" description="" value="Server=tcp:openavvabhidbserver.database.windows.net,1433;Initial Catalog=OpenAvvDB;Persist Security Info=False;User ID=abhi;Password=backBACK789;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;" tags="dbfullsql">
+    <parameterEntry kind="ProviderPath" scope="dbfullsql" match="^C:\\Users\\KabbiReddy\\Documents\\Visual\ Studio\ 2017\\Projects\\OpenAvv\\OpenAvv\\obj\\Release\\netcoreapp2\.0\\PubTmp\\EFSQLScripts\\OpenAvv\.Data\.OpenAvvDbContext\.sql$" />
+  </parameter>
+</parameters>

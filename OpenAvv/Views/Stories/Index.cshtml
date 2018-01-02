@@ -1,4 +1,4 @@
-﻿@model IEnumerable<StoryVM>
+﻿@model IEnumerable<StoryViewModel>
 @using Microsoft.AspNetCore.Identity;
 @using OpenAvv.Extensions;
 
@@ -32,14 +32,14 @@
                             <div class="col-md-4">
                                 <div class="card card-blog">
                                     <div class="card-image">
-                                        <a asp-controller="Stories" asp-action="Details" asp-route-id="@item.ID" class="text-primary">
+                                        <a asp-controller="Stories" asp-action="Details" asp-route-id="@item.Id" class="text-primary">
                                             <img class="img rounded" src="/assets/img/card-blog2.jpg">
                                         </a>
                                     </div>
                                     <div class="card-body">
                                         <h6 class="category text-primary text-center">@Html.DisplayFor(modelItem => item.Title)</h6>
                                         <h5 class="card-title text-center">
-                                            @Html.DisplayFor(modelItem => item.Info)
+                                            @Html.DisplayFor(modelItem => item.Description)
                                         </h5>
                                         @*<p class="card-description">
                                             @Html.DisplayFor(modelItem => item.Description)
@@ -56,9 +56,9 @@
                                             else
                                             {
                                                 <div class="stats">
-                                                    <a asp-controller="Stories" asp-action="Edit" asp-route-id="@item.ID" class="text-info small">Edit</a>
+                                                    <a asp-controller="Stories" asp-action="Edit" asp-route-id="@item.Id" class="text-info small">Edit</a>
 
-                                                    <button type="button" class="text-danger btn-link small" data-toggle="modal" data-target="#@item.ID">Delete</button>
+                                                    <button type="button" class="text-danger btn-link small" data-toggle="modal" data-target="#@item.Id">Delete</button>
                                                 </div>
                                             }
                                             <div class="stats stats-right">
@@ -69,7 +69,7 @@
                                 </div>
                             </div>
                             <!-- .modal -->
-                            <div class="modal fade " id="@item.ID" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal fade " id="@item.Id" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header justify-content-center">
@@ -81,7 +81,7 @@
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                                            <a asp-controller="Stories" asp-action="Delete" asp-route-id="@item.ID" class="btn btn-danger">Confirm Delete</a>
+                                            <a asp-controller="Stories" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Confirm Delete</a>
                                         </div>
                                     </div><!-- /.modal-content -->
                                 </div><!-- /.modal-dialog -->

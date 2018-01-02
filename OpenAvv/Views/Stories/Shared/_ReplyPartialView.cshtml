@@ -1,0 +1,29 @@
+﻿@model OpenAvv.ViewModels.StoryViewModel
+@inject SignInManager<OpenAvvUser> SignInManager
+@inject UserManager<OpenAvvUser> UserManager
+
+
+
+@if (SignInManager.IsSignedIn(User))
+{
+    @*<h3 class="title text-center">Post your comment</h3>*@
+    <div class="media media-post reply-textarea" style="display: none;">
+        <a class="pull-left author" href="#pablo">
+            <div class="avatar">
+                <img class="media-object img-raised" alt="64x64" src="/assets/img/olivia.jpg">
+            </div>
+        </a>
+        <div class="media-body">
+            <form asp-action="NewReply">
+                <textarea name="replyBody" class="form-control" placeholder="Write a nice reply or go home..." rows="4"></textarea>
+                <input value="@Model.Id" name="postid" type="hidden" />
+                <input value="@ViewData["CommentId"]" name="commentid" type="hidden" />
+                <div class="media-footer">
+                    <button type="submit" class="btn btn-primary pull-right">
+                        <i class="now-ui-icons ui-1_send"></i> Reply
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+}

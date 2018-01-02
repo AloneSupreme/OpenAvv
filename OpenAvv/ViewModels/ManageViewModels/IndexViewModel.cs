@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -21,5 +22,9 @@ namespace OpenAvv.ViewModels.ManageViewModels
         public string PhoneNumber { get; set; }
 
         public string StatusMessage { get; set; }
+        public IFormFile Avatar { get; set; }
+        public string AvatarPath { get; set; }
+        public string UserFullName { get; set; }
+        public string UserDescription { get; set; }
     }
 }

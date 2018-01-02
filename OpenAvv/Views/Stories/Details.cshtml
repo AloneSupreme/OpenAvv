@@ -1,6 +1,6 @@
-﻿@model StoryVM
-
+﻿@model StoryViewModel
 @{
+    
     ViewData["Title"] = "Details";
     ViewData["PageType"] = "blog-post";
     ViewData["NavClass"] = "navbar navbar-expand-lg navbar-absolute navbar-transparent";
@@ -11,6 +11,7 @@
 
 @inject SignInManager<OpenAvvUser> SignInManager
 @inject UserManager<OpenAvvUser> UserManager
+
 <script src="https://cdn.ckeditor.com/ckeditor5/1.0.0-alpha.2/balloon/ckeditor.js"></script>
 <div class="page-header page-header-small">
     <div class="page-header-image" data-parallax="true" style="background-image: url('/assets/img/bg24.jpg');">
@@ -19,7 +20,7 @@
         <div class="row">
             <div class="col-md-8 ml-auto mr-auto text-center">
                 <h2 class="title">@Html.DisplayFor(model => model.Title)</h2>
-                <h4>@Html.DisplayFor(model => model.Info)</h4>
+                <h4>@Html.DisplayFor(model => model.Description)</h4>
             </div>
         </div>
     </div>
@@ -51,25 +52,17 @@
             <div class="col-md-8 ml-auto mr-auto">
                 @if (UserManager.GetUserId(User) == Model.AuthorId)
                 {
-                    <a asp-controller="Stories" asp-action="Edit" asp-route-id="@Model.ID" class="text-info small">Edit</a>
-                    <button type="button" class="text-danger btn-link small" data-toggle="modal" data-target="#@Model.ID">Delete</button>
+                    <a asp-controller="Stories" asp-action="Edit" asp-route-id="@Model.Id" class="text-info small">Edit</a>
+                    <button type="button" class="text-danger btn-link small" data-toggle="modal" data-target="#@Model.Id">Delete</button>
                 }
                 <h3 class="title">@Html.DisplayFor(model => model.Title)</h3>
-                <p  @*id="editor"*@>
-                    @Html.Raw(@Model.Description)
+                <p @*id="editor" *@>
+                    @Html.Raw(@Model.Body)
                 </p>
             </div>
         </div>
     </div>
 
-    <script>
-            BalloonEditor
-                .create(document.querySelector('#editor'))
-                .catch(error => {
-                    console.error(error);
-                });
-    </script>
-    
     <div class="section section-blog-info">
         <div class="container">
             <div class="row">
@@ -108,10 +101,10 @@
                             </div>
                             <div class="col-md-8">
                                 <h4 class="card-title">@Html.DisplayFor(model => model.AuthorName)</h4>
-                                <p class="description">I've been trying to figure out the bed design for the master bedroom at our Hidden Hills compound...I like good music from Youtube.</p>
+                                <p class="description">@Html.DisplayFor(model => model.AuthorDescription)</p>
                             </div>
                             <div class="col-md-2">
-                                <button type="button" class="btn btn-default pull-right btn-round">Follow</button>
+                                <a asp-action="Stories" asp-route-id="@Model.AuthorId" class="btn btn-default pull-right btn-round">View All My Stories</a>
                             </div>
                         </div>
                     </div>
@@ -124,209 +117,239 @@
             <div class="row">
                 <div class="col-md-8 ml-auto mr-auto">
                     <div class="media-area">
-                        <h3 class="title text-center">3 Comments</h3>
-                        <div class="media">
-                            <a class="pull-left" href="#pablo">
-                                <div class="avatar">
-                                    <img class="media-object img-raised" src="/assets/img/james.jpg" alt="..." />
-                                </div>
-                            </a>
-                            <div class="media-body">
-                                <h5 class="media-heading">
-                                    Tina Andrew
-                                    <small class="text-muted">&middot; 7 minutes ago</small>
-                                </h5>
-                                <p>Chance too good. God level bars. I'm so proud of "LifeOfDesiigner" #1 song in the country. Panda! Don't be scared of the truth because we need to restart the human foundation in truth I stand with the most humility. We are so blessed!</p>
-                                <p>All praises and blessings to the families of people who never gave up on dreams. Don't forget, You're Awesome!</p>
-                                <div class="media-footer">
-                                    <a href="#pablo" class="btn btn-primary btn-neutral pull-right" rel="tooltip" title="Reply to Comment">
-                                        <i class="now-ui-icons ui-1_send"></i> Reply
-                                    </a>
-                                    <a href="#pablo" class="btn btn-danger btn-neutral pull-right">
-                                        <i class="now-ui-icons ui-2_favourite-28"></i> 243
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="media">
-                            <a class="pull-left" href="#pablo">
-                                <div class="avatar">
-                                    <img class="media-object img-raised" alt="Tim Picture" src="/assets/img/michael.jpg">
-                                </div>
-                            </a>
-                            <div class="media-body">
-                                <h5 class="media-heading">
-                                    John Camber
-                                    <small class="text-muted">&middot; Yesterday</small>
-                                </h5>
-                                <p>Hello guys, nice to have you on the platform! There will be a lot of great stuff coming soon. We will keep you posted for the latest news.</p>
-                                <p> Don't forget, You're Awesome!</p>
-                                <div class="media-footer">
-                                    <a href="#pablo" class="btn btn-primary btn-neutral pull-right" rel="tooltip" title="Reply to Comment">
-                                        <i class="now-ui-icons ui-1_send"></i> Reply
-                                    </a>
-                                    <a href="#pablo" class="btn btn-danger btn-neutral pull-right">
-                                        <i class="now-ui-icons ui-2_favourite-28"></i> 25
-                                    </a>
-                                </div>
-                                <div class="media">
-                                    <a class="pull-left" href="#pablo">
-                                        <div class="avatar">
-                                            <img class="media-object img-raised" alt="64x64" src="/assets/img/julie.jpg">
+                        @if(Model.Comments.Count() == 0)
+                        {
+                        <h3 class="title text-center">No Comments</h3>
+                        }
+                        else if(Model.Comments.Count() == 1)
+                        {
+                            <h3 class="title text-center">One Comment</h3>
+                        }
+                        else
+                        {
+                            <h3 class="title text-center">@Model.Comments.Count() Comments</h3>
+                        }
+
+                        @foreach (CommentViewModel commentItem in Model.Comments)
+                        {
+                            <hr />
+                            <div class="media">
+                                <a class="pull-left" href="#pablo">
+                                    <div class="avatar">
+                                        <img class="media-object img-raised" src="/assets/img/james.jpg" alt="..." />
+                                    </div>
+                                </a>
+                                <div class="media-body">
+                                    <h5 class="media-heading">
+                                        @commentItem.CommenterName&nbsp;
+                                        @if (Model.AuthorId.Equals(commentItem.CommenterId))
+                                        {<small class="category text-info">Author</small>} 
+                                        <small class="text-muted">&middot; @*@String.Format("{0:MMMM dd, yyyy}", commentItem.DateCreated)*@
+                                            <span class="timeago" title="@commentItem.DateCreated"></span>
+                                        </small>
+
+                                    </h5>
+                                    <p>@commentItem.Body</p>
+                                    <div class="media-footer">
+                                        
+                                           @if (SignInManager.IsSignedIn(User))
+                                           {
+                                                <a id="loadReplyPartialView" class="btn btn-primary btn-neutral pull-right reply-trigger" >
+                                                    <i class="now-ui-icons ui-1_send"></i> Reply
+                                                </a>
+                                            }
+                                            else{
+                                                <a id="loadReplyPartialView" class="btn btn-primary btn-neutral pull-right reply-trigger" rel="tooltip" title="Login to Reply">
+                                                    <i class="now-ui-icons ui-1_send"></i> Reply
+                                                </a>
+                                            }
+                                        <a id="dislikeincmt@(commentItem.Id)" data-like-or-dislike="dislike" data-comment-id="@commentItem.Id" data-story-id="@Model.Id" class="btn btn-danger btn-neutral pull-right dislike">
+                                            @if (commentItem.LikeOrDislike.Equals("Dislike"))
+                                            {<i class="fa fa-thumbs-down fa-lg"></i>}
+                                            else
+                                            {<i class="fa fa-thumbs-o-down fa-lg"></i>}
+                                            &nbsp;@commentItem.DislikeCount
+                                        </a>
+                                        <a id="likeincmt@(commentItem.Id)" data-like-or-dislike="like" data-comment-id="@commentItem.Id" data-story-id="@Model.Id" class="btn btn-danger btn-neutral pull-right like">
+                                            @if (commentItem.LikeOrDislike.Equals("Like"))
+                                            {<i class="fa fa-thumbs-up fa-lg"></i>}
+                                            else
+                                            {<i class="fa fa-thumbs-o-up fa-lg"></i>}
+                                            &nbsp;@commentItem.LikeCount
+                                        </a>
+                                    </div>
+                                    <!-- reply div -->
+                                    @foreach (CommentViewModel replyItem in commentItem.Replies)
+                                    {
+                                    <div class="media">
+                                        <a class="pull-left" href="#pablo">
+                                            <div class="avatar">
+                                                <img class="media-object img-raised" src="/assets/img/james.jpg" alt="..." />
+                                            </div>
+                                        </a>
+                                        <div class="media-body">
+                                            <h5 class="media-heading">
+                                                @replyItem.CommenterName&nbsp;
+                                                @if (Model.AuthorId.Equals(replyItem.CommenterId))
+                                                {<small class="category text-info">Author</small>} 
+                                                <small class="text-muted">&middot; @*@String.Format("{0:MMMM dd, yyyy}", replyItem.DateCreated)*@
+                                                    <span class="timeago" title="@replyItem.DateCreated"></span>
+                                                </small>
+
+                                            </h5>
+                                            <p>@replyItem.Body</p>
+                                            @*<div class="media-footer">
+                                                <a id="loadReplyPartialView" class="btn btn-primary btn-neutral pull-right" rel="tooltip" title="Reply to Comment">
+                                                    <i class="now-ui-icons ui-1_send"></i> Reply
+                                                </a>
+                                                <a id="dislikeincmt@(item.Id)" data-like-or-dislike="dislike" data-comment-id="@item.Id" data-story-id="@Model.Id" class="btn btn-danger btn-neutral pull-right dislike">
+                                                    @if (item.LikeOrDislike.Equals("Dislike"))
+                                                    {<i class="fa fa-thumbs-down fa-lg"></i>}
+                                                    else
+                                                    {<i class="fa fa-thumbs-o-down fa-lg"></i>}
+                                                    &nbsp;@item.DislikeCount
+                                                </a>
+                                                <a id="likeincmt@(item.Id)" data-like-or-dislike="like" data-comment-id="@item.Id" data-story-id="@Model.Id" class="btn btn-danger btn-neutral pull-right like">
+                                                    @if (item.LikeOrDislike.Equals("Like"))
+                                                    {<i class="fa fa-thumbs-up fa-lg"></i>}
+                                                    else
+                                                    {<i class="fa fa-thumbs-o-up fa-lg"></i>}
+                                                    &nbsp;@item.LikeCount
+                                                </a>
+                                            </div>*@
                                         </div>
-                                    </a>
-                                    <div class="media-body">
-                                        <h5 class="media-heading">
-                                            Tina Andrew
-                                            <small class="text-muted">· 2 Days Ago</small>
-                                        </h5>
-                                        <p>Hello guys, nice to have you on the platform! There will be a lot of great stuff coming soon. We will keep you posted for the latest news.</p>
-                                        <p> Don't forget, You're Awesome!</p>
-                                        <div class="media-footer">
-                                            <a href="#pablo" class="btn btn-primary btn-neutral pull-right" rel="tooltip" title="" data-original-title="Reply to Comment">
-                                                <i class="now-ui-icons ui-1_send"></i> Reply
-                                            </a>
-                                            <a href="#pablo" class="btn btn-danger btn-neutral pull-right">
-                                                <i class="now-ui-icons ui-2_favourite-28"></i> 2
-                                            </a>
-                                        </div>
+                                    </div>
+                                    }
+                                    <!-- /reply div -->
+                                    <div id="ReplyFormDiv" class="commentreplies">
+                                        @{ViewData["CommentId"] = commentItem.Id;}
+                                        @Html.Partial("Shared/_ReplyPartialView" )
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <h3 class="title text-center">Post your comment</h3>
-                    <div class="media media-post">
-                        <a class="pull-left author" href="#pablo">
-                            <div class="avatar">
-                                <img class="media-object img-raised" alt="64x64" src="/assets/img/olivia.jpg">
-                            </div>
-                        </a>
-                        <div class="media-body">
-                            <textarea class="form-control" placeholder="Write a nice reply or go home..." rows="4"></textarea>
-                            <div class="media-footer">
-                                <a href="#pablo" class="btn btn-primary pull-right">
-                                    <i class="now-ui-icons ui-1_send"></i> Reply
+                        }
+                        @*<div class="media">
+                                <a class="pull-left" href="#pablo">
+                                    <div class="avatar">
+                                        <img class="media-object img-raised" alt="Tim Picture" src="/assets/img/michael.jpg">
+                                    </div>
                                 </a>
+                                <div class="media-body">
+                                    <h5 class="media-heading">
+                                        John Camber
+                                        <small class="text-muted">&middot; Yesterday</small>
+                                    </h5>
+                                    <p>Hello guys, nice to have you on the platform! There will be a lot of great stuff coming soon. We will keep you posted for the latest news.</p>
+                                    <p> Don't forget, You're Awesome!</p>
+                                    <div class="media-footer">
+                                        <a href="#pablo" class="btn btn-primary btn-neutral pull-right" rel="tooltip" title="Reply to Comment">
+                                            <i class="now-ui-icons ui-1_send"></i> Reply
+                                        </a>
+                                        <a href="#pablo" class="btn btn-danger btn-neutral pull-right">
+                                            <i class="now-ui-icons ui-2_favourite-28"></i> 25
+                                        </a>
+                                    </div>
+                                    <div class="media">
+                                        <a class="pull-left" href="#pablo">
+                                            <div class="avatar">
+                                                <img class="media-object img-raised" alt="64x64" src="/assets/img/julie.jpg">
+                                            </div>
+                                        </a>
+                                        <div class="media-body">
+                                            <h5 class="media-heading">
+                                                Tina Andrew
+                                                <small class="text-muted">· 2 Days Ago</small>
+                                            </h5>
+                                            <p>Hello guys, nice to have you on the platform! There will be a lot of great stuff coming soon. We will keep you posted for the latest news.</p>
+                                            <p> Don't forget, You're Awesome!</p>
+                                            <div class="media-footer">
+                                                <a href="#pablo" class="btn btn-primary btn-neutral pull-right" rel="tooltip" title="" data-original-title="Reply to Comment">
+                                                    <i class="now-ui-icons ui-1_send"></i> Reply
+                                                </a>
+                                                <a href="#pablo" class="btn btn-danger btn-neutral pull-right">
+                                                    <i class="now-ui-icons ui-2_favourite-28"></i> 2
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>*@
+                    </div>
+                    @if (SignInManager.IsSignedIn(User))
+                    {
+                        <h3 class="title text-center">Post your comment</h3>
+                        <div class="media media-post">
+                            <a class="pull-left author" href="#pablo">
+                                <div class="avatar">
+                                    <img class="media-object img-raised" alt="64x64" src="/assets/img/olivia.jpg">
+                                </div>
+                            </a>
+                            <div class="media-body">
+                                <form asp-action="NewComment">
+                                    <textarea name="commentBody" class="form-control" placeholder="Write a nice comment or go home..." rows="4"></textarea>
+                                    <input value="@Model.Id" name="postid" hidden />
+                                    <div class="media-footer">
+                                        <button type="submit" class="btn btn-primary pull-right">
+                                            <i class="now-ui-icons ui-1_send"></i> Comment
+                                        </button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
-                    </div>
-                    <!-- end media-post -->
+                    }
                 </div>
             </div>
         </div>
     </div>
-    @*<div class="section">
-        <div class="container">
-            <div class="col-md-12">
-                <h2 class="title text-center">Similar Stories</h2>
-                <br />
-                <div class="blogs-1" id="blogs-1">
-                    <div class="row">
-                        <div class="col-md-10 ml-auto mr-auto">
-                            <div class="card card-plain card-blog">
-                                <div class="row">
-                                    <div class="col-md-5">
-                                        <div class="card-image">
-                                            <img class="img img-raised rounded" src="/assets/img/examples/card-blog4.jpg">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-7">
-                                        <h6 class="category text-info">Enterprise</h6>
-                                        <h3 class="card-title">
-                                            <a href="#pablo">Warner Music Group buys concert discovery service Songkick</a>
-                                        </h3>
-                                        <p class="card-description">
-                                            Warner Music Group announced today it’s acquiring the selected assets of the music platform Songkick, including its app for finding concerts and the company’s trademark.
-                                        </p>
-                                        <p class="author">
-                                            by
-                                            <a href="#pablo">
-                                                <b>Sarah Perez</b>
-                                            </a>, 2 days ago
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card card-plain card-blog">
-                                <div class="row">
-                                    <div class="col-md-7">
-                                        <h6 class="category text-danger">
-                                            <i class="now-ui-icons now-ui-icons media-2_sound-wave"></i> Startup
-                                        </h6>
-                                        <h3 class="card-title">
-                                            <a href="#pablo">Insticator raises $5.2M to help publishers</a>
-                                        </h3>
-                                        <p class="card-description">
-                                            Insticator is announcing that it has raised $5.2 million in Series A funding. The startup allows online publishers to add quizzes, polls and other interactive elements...
-                                        </p>
-                                        <p class="author">
-                                            by
-                                            <a href="#pablo">
-                                                <b>Anthony Ha</b>
-                                            </a>, 5 days ago
-                                        </p>
-                                    </div>
-                                    <div class="col-md-5">
-                                        <div class="card-image">
-                                            <img class="img img-raised rounded
-                                            " src="/assets/img/examples/card-blog6.jpg">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>*@
+
 </div>
 @*<h2>Details</h2>
 
-<div>
-    <h4>StoryVM</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Title)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.AuthorName)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.AuthorName)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Info)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Info)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.DateCreated)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.DateCreated)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.DateModified)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.DateModified)
-        </dd>
-    </dl>   
-</div>*@
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.ID">Edit</a> |
+    <div>
+        <h4>StoryVM</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Title)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Title)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.AuthorName)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.AuthorName)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Info)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Info)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Description)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Description)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.DateCreated)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.DateCreated)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.DateModified)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.DateModified)
+            </dd>
+        </dl>
+    </div>*@
+@*<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>
-</div>
+</div>*@
+
+

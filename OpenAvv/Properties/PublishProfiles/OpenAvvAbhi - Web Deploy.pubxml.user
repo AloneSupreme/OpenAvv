@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file is used by the publish/package process of your Web project. You can customize the behavior of this process
+by editing this MSBuild file. In order to learn more about this please visit https://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAVIb3keosgU+uX+hcvNSATAAAAAACAAAAAAAQZgAAAAEAACAAAACV0RtEldAKiFFVwPXVAz2oqlOwhXJhDAUpj7wZWzdDcAAAAAAOgAAAAAIAACAAAAB1otiQdov8Q4hchSEGAK5DSJei8xjz1M9F55W6w2wtOIAAAABteWT2RhTFt0dgTwt5WiWgu3/hm5afWiPVTLUq2dDRyYGzemiUqP4s+ME+H8IwooPqnt3+KMZW09Nc6EkyUOXT5BmtZc2fwe+4BRqDR3V+NUhvQ4T6fTOl2rm1vtdA+T4wcFuu2MVXw6OixUBfisLlUu8N0wPstpp5hNJqk9eaVEAAAADyJjPbSlG2C1YoicnJrIe/lLIcAZatx8JaWbP7ZM2Mdfud7se2ckwZAoUYMTc72bvd3hgKzppK9leqPT2v+en6</EncryptedPassword>
+  </PropertyGroup>
+  <ItemGroup>
+    <EFMigrations Include="OpenAvv.Data.OpenAvvDbContext">
+      <Value>Server=tcp:openavvabhidbserver.database.windows.net,1433;Initial Catalog=OpenAvvDB;Persist Security Info=False;User ID=abhi;Password=backBACK789;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;</Value>
+    </EFMigrations>
+  </ItemGroup>
+</Project>

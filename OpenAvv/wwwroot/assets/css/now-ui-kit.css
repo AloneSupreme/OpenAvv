@@ -4138,32 +4138,32 @@ fieldset[disabled] .btn-link.active {
 }
 
 .form-control::-moz-placeholder {
-    color: #DDDDDD;
+    color: #666;
     opacity: 1;
     filter: alpha(opacity=100);
 }
 
 .form-control:-moz-placeholder {
-    color: #DDDDDD;
+    color: #666;
     opacity: 1;
     filter: alpha(opacity=100);
 }
 
 .form-control::-webkit-input-placeholder {
-    color: #DDDDDD;
+    color: #666;
     opacity: 1;
     filter: alpha(opacity=100);
 }
 
 .form-control:-ms-input-placeholder {
-    color: #DDDDDD;
+    color: #666;
     opacity: 1;
     filter: alpha(opacity=100);
 }
 
 .form-control {
     background-color: transparent;
-    border: 1px solid #E3E3E3;
+    border: 1px solid #444;
     border-radius: 30px;
     color: #2c2c2c;
     line-height: normal;
